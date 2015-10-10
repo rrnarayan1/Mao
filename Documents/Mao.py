@@ -99,32 +99,42 @@ def playgame(num_players):
     while(min([len(player) for player in players]) != 0):
         for player in players:
             print("Current Card: "+str(face_up_card))
-            temp_card=player.play_card(deck)
-            if(temp_card==None):
-                face_up_card=face_up_card
-            else:
-                face_up_card=temp_card
-                
-            
-        
-        
-        
-        
+            face_up_card=take_turn(face_up_card,player,deck)
+            if(len(player)==0):
+                print(player.name+" WINS THE GAME!!")
+                break
 
+def take_turn(face_up_card,player,deck):
+    temp_card=player.play_card(deck)
+    if(temp_card==None):
+        return face_up_card
+    if action(face_up_card, temp_card, player)==False:
+        print("PLAY A LEGAL CARD")
+        deck.draw(player)
+        player.hand.append(temp_card)
+        return take_turn(face_up_card, player, deck)
+    else:
+        return temp_card
         
-
-class Rules:
-    def __init__ (self):
-        self.deck = deck 
-    def action(card, player):
-        if isSeven(card):
+def isValidMove(current_card, played_card):
+    if(current_card.suit==played_card.suit or current_card.number == played_card.number):
+        return True
+    else:
+        return False
+def isSeven(card):
+    return card.number == 7
+def isSpade(card):
+    return card.suit == 'spades'
+def action(current_card, played_card, player):
+    if isValidMove(current_card, played_card)==False:
+        return False
+    else: 
+        if isSeven(played_card):
             print('is seven')
-        if isSpade(card):
+            return True
+        if isSpade(played_card):
             print('is spade')
-    def isSeven(card):
-        return card.number == 7
-    def isSpade(card):
-        return card.suit == 'spades'
+            return True
     # def thank_you(card):
 
     # def last_card():
@@ -132,7 +142,7 @@ class Rules:
     # def end_game
 
     # def cannot_play(card):
-
+"""
 class extraRules(Rules):
     # to be implemented when player wins 
     def isPrime(card):
@@ -140,4 +150,4 @@ class extraRules(Rules):
         return card.number in primeNumbers
     def isEven(card):
         return card.number%2 == 0
-
+"""
