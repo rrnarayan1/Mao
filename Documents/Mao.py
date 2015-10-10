@@ -86,5 +86,32 @@ def playgame(num_players):
         
 
         
-    
-    
+
+class Rules:
+    def __init__ (self):
+        self.deck = deck 
+    def action(card, player):
+        if isSeven(card):
+            print('is seven')
+        if isSpade(card):
+            print('is spade')
+    def isSeven(card):
+        return card.number == 7
+    def isSpade(card):
+        return card.suit == 'spades'
+    # def thank_you(card):
+
+    # def last_card():
+
+    # def end_game
+
+    # def cannot_play(card):
+
+class extraRules(Rules):
+    # to be implemented when player wins 
+    def isPrime(card):
+        primeNumbers = [2,3,5,7,11,13]
+        return card.number in primeNumbers
+    def isEven(card):
+        return card.number%2 == 0
+
